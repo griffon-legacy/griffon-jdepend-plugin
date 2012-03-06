@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2010 the original author or authors.
+ * Copyright 2009-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,69 @@
  * @author Andres Almiray
  */
 class JdependGriffonPlugin {
-    def version = '0.3'
-    def dependsOn = [:]
-    def griffonVersion = '0.9 > *'
-    def license = 'Apache Software License 2.0'
-    def pluginIncludes = ['src/etc/**']
+    // the plugin version
+    String version = '0.4'
+    // the version or versions of Griffon the plugin is designed for
+    String griffonVersion = '0.9.5 > *'
+    // the other plugins this plugin depends on
+    Map dependsOn = [:]
+    // resources that are included in plugin packaging
+    List pluginIncludes = ['src/etc/jdepend.xsl', 'src/etc/jdepend-frames.xsl']
+    // the plugin license
+    String license = 'Apache Software License 2.0'
+    // Toolkit compatibility. No value means compatible with all
+    // Valid values are: swing, javafx, swt, pivot, gtk
+    List toolkits = []
+    // Platform compatibility. No value means compatible with all
+    // Valid values are:
+    // linux, linux64, windows, windows64, macosx, macosx64, solaris
+    List platforms = []
+    // URL where documentation can be found
+    String documentation = ''
+    // URL where source can be found
+    String source = 'https://github.com/griffon/griffon-jdepend-plugin'
 
-    def author = 'Andres Almiray'
-    def authorEmail = 'aalmiray@users.sourceforge.net'
-    def title = 'Runs JDepend metrics on your Griffon application'
-    def description = '''
-JDepend traverses Java class file directories and generates design quality metrics for each Java package.
-JDepend allows you to automatically measure the quality of a design in terms of its extensibility, reusability, 
-and maintainability to manage package dependencies effectively.
+    List authors = [
+            [
+                    name: 'Andres Almiray',
+                    email: 'aalmiray@yahoo.com'
+            ]
+    ]
+    String title = 'Runs JDepend metrics on your Griffon application'
+    // accepts Markdown syntax. See http://daringfireball.net/projects/markdown/ for details
+    String description = '''
+Provides code metrics with [JDepend][1]. JDepend traverses Java class file directories and generates design
+quality metrics for each Java/Groovy package. JDepend allows you to automatically measure the quality of a
+design in terms of its extensibility, reusability, and maintainability to manage package dependencies effectively. 
+
+Usage
+-----
+
+Just execute the `jdepend` command target.
+
+Configuration
+-------------
+
+The plugin will automatically exclude the following packages 
+
+ * `java.lang`
+ * `java.util`
+ * `java.net`
+ * `java.io`,
+ * `java.math`
+ * `groovy.lang`
+ * `groovy.util`
+ * `org.codehaus.groovy.*`
+ 
+You can specify additional exclusions by defining the following property on `BuildConfig.groovy`
+
+        griffon.jdepend.excludes = ['package.one', 'package.two']
+
+Scripts
+-------
+
+ * **jdepend** - run jdepend metrics on the application's source code
+
+[1]: http://clarkware.com/software/JDepend.html
 '''
-
-    // URL to the plugin's documentation
-    def documentation = 'http://griffon.codehaus.org/Jdepend+Plugin'
 }
